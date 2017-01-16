@@ -1,0 +1,20 @@
+# db:
+#   image: postgres
+#   container_name: tt_db
+#   environment:
+#     - POSTGRES_USER=docker
+#     - POSTGRES_PASSWORD=docker
+#   ports:
+#     - "5432:5432"
+dj_oauth:
+  image: sparkgeo/django-oauth-service:dj_oauth
+  container_name: dj_oauth
+  environment:
+    - RESTORE=local
+  volumes:
+    - ./src:/var/projects/webapp
+  ports:
+    - "80:80"
+    - "8000:8000"
+  # links:
+  #   - db
