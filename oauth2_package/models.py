@@ -5,10 +5,10 @@ from django.contrib.auth.models import BaseUserManager
 from django.db import models
 
 
-class AccountManager(BaseUserManager):
+class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **kwargs):
         if not email:
-            raise ValueError('Accounts must have a valid email address.')
+            raise ValueError('Users must have a valid email address.')
 
         account = self.model(
             email=self.normalize_email(email)
@@ -29,7 +29,7 @@ class AccountManager(BaseUserManager):
         return account
 
 
-class Account(AbstractBaseUser, PermissionsMixin):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -37,7 +37,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    objects = AccountManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
 

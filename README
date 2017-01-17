@@ -1,0 +1,45 @@
+Requirements
+------------
+
+* Python (2.7, 3.2, 3.3, 3.4, 3.5)
+* Django (1.8, 1.9, 1.10)
+
+
+Installation
+------------
+
+Install oauth2_package using `pip`...
+
+```
+  pip install django-oauth2-package
+```
+
+Update `INSTALLED_APPS`...
+
+```
+  INSTALLED_APPS = (
+    ...
+    'oauth2_provider',
+    'corsheaders',
+    'djoser',
+    'oauth2_package',
+    ...
+  )
+```
+
+Add to settings.py
+
+```
+AUTH_USER_MODEL = 'oauth2_package.User'
+```
+
+Add to urls.py
+
+```
+urlpatterns = [
+    url(r'^admin/', admin.site.urls),
+    url(r'^auth/', include('oauth2_package.urls')),
+    ...
+]
+
+```
