@@ -1,4 +1,3 @@
-
 from django.conf import settings
 
 INSTALLED_APPS = getattr(settings, 'INSTALLED_APPS', tuple())
@@ -8,31 +7,41 @@ REST_FRAMEWORK = getattr(settings, 'REST_FRAMEWORK', {})
 TEMPLATE_LOADERS = getattr(settings, 'TEMPLATE_LOADERS', tuple())
 
 
-INSTALLED_APPS += (
+def _append(setting, additions, index=None):
+    setts = getattr(settings, setting, [])
+    additions = [a for a in additions if a not in setts]
+    if isinstance(setts, tuple):
+        additions = tuple(additions)
+
+    return setts + additions
+
+AUTH_USER_MODEL = 'oauth2_package.User'
+LOGIN_URL = '/auth/login/'
+CORS_ORIGIN_ALLOW_ALL = True
+ACCESS_TOKEN_EXPIRE_SECONDS = getattr(settings, 'ACCESS_TOKEN_EXPIRE_SECONDS', 7200)
+LOGIN_FORM_LOGO = ''
+
+INSTALLED_APPS = _append('INSTALLED_APPS', (
     'rest_framework.authtoken',
     'oauth2_provider',
     'corsheaders',
-    'djoser',
-)
+))
 
-AUTH_USER_MODEL = 'oauth2_package.User'
+MIDDLEWARE = _append('MIDDLEWARE', (
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+))
 
-MIDDLEWARE += ('oauth2_provider.middleware.OAuth2TokenMiddleware',)
-AUTHENTICATION_BACKENDS += (
+AUTHENTICATION_BACKENDS = _append('AUTHENTICATION_BACKENDS',(
     'oauth2_provider.backends.OAuth2Backend',
     'django.contrib.auth.backends.ModelBackend'
-)
-
-LOGIN_URL = '/auth/login/'
-
-CORS_ORIGIN_ALLOW_ALL = True
-
-if 'django.template.loaders.app_directories.load_template_source' not in TEMPLATE_LOADERS:
-    TEMPLATE_LOADERS += ('django.template.loaders.app_directories.load_template_source',)
+))
 
 #
 # RESTFRAMEWORK SETTINGS
 #
+
+REST_FRAMEWORK = getattr(settings, 'REST_FRAMEWORK', {})
 if 'DEFAULT_RENDERER_CLASSES' not in REST_FRAMEWORK:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = ()
 if 'oauth2_provider.ext.rest_framework.OAuth2Authentication' not in REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES']:
@@ -40,5 +49,3 @@ if 'oauth2_provider.ext.rest_framework.OAuth2Authentication' not in REST_FRAMEWO
 
 if 'rest_framework.authentication.SessionAuthentication' not in REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES']:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += ('rest_framework.authentication.SessionAuthentication',)
-
-ACCESS_TOKEN_EXPIRE_SECONDS = getattr(settings, 'ACCESS_TOKEN_EXPIRE_SECONDS', 7200)

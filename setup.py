@@ -32,7 +32,6 @@ setup(
         'djangorestframework>=3.0',
         'django-oauth-toolkit==0.11',
         'django-cors-middleware==1.3.1',
-        'djoser==0.5.2',
     ],
     include_package_data=True,
     classifiers=[
