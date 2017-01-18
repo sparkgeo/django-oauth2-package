@@ -26,7 +26,4 @@ auth_urlpatterns = (
 )
 
 urlpatterns = (oauth2_provider_urlpatterns +
-               auth_urlpatterns +
-               (url(r'^$', djoser_views.RootView.as_view(), name='root'),))
-
-print(urlpatterns)
+               auth_urlpatterns)
