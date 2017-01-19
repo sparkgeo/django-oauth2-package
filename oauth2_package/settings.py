@@ -1,11 +1,5 @@
 from django.conf import settings
 
-INSTALLED_APPS = getattr(settings, 'INSTALLED_APPS', tuple())
-MIDDLEWARE = getattr(settings, 'MIDDLEWARE', tuple())
-AUTHENTICATION_BACKENDS = getattr(settings, 'AUTHENTICATION_BACKENDS', tuple())
-REST_FRAMEWORK = getattr(settings, 'REST_FRAMEWORK', {})
-TEMPLATE_LOADERS = getattr(settings, 'TEMPLATE_LOADERS', tuple())
-
 
 def _append(setting, additions, index=None):
     setts = getattr(settings, setting, [])
@@ -14,6 +8,7 @@ def _append(setting, additions, index=None):
         additions = tuple(additions)
 
     return setts + additions
+
 
 AUTH_USER_MODEL = 'oauth2_package.User'
 LOGIN_URL = '/auth/login/'

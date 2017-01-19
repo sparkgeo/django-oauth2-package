@@ -30,3 +30,9 @@ urlpatterns = [
 ]
 
 ```
+
+Add logo to login dialog
+
+```
+  LOGIN_FORM_LOGO = ''
+```
