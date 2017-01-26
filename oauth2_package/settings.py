@@ -32,6 +32,10 @@ AUTHENTICATION_BACKENDS = _append('AUTHENTICATION_BACKENDS',(
     'django.contrib.auth.backends.ModelBackend'
 ))
 
+TEMPLATE_LOADERS = _append('TEMPLATE_LOADERS',
+                           ('django.template.loaders.app_directories.Loader',))
+
+#
 #
 # RESTFRAMEWORK SETTINGS
 #
