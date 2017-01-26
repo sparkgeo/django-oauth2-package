@@ -1,7 +1,7 @@
 from django.conf import settings
 
 
-def _append(setting, additions, index=None):
+def _append(setting, additions):
     setts = getattr(settings, setting, [])
     additions = [a for a in additions if a not in setts]
     if isinstance(setts, tuple):
@@ -31,9 +31,6 @@ AUTHENTICATION_BACKENDS = _append('AUTHENTICATION_BACKENDS',(
     'oauth2_provider.backends.OAuth2Backend',
     'django.contrib.auth.backends.ModelBackend'
 ))
-
-TEMPLATE_LOADERS = _append('TEMPLATE_LOADERS',
-                           ('django.template.loaders.app_directories.Loader',))
 
 #
 #
