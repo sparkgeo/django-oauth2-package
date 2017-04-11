@@ -21,7 +21,7 @@ class LoginView(View):
         return HttpResponse(template.render(data, request))
 
     def post(self, request):
-        user = authenticate(email=request.POST.get('email'), password=request.POST.get('password'))
+        user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
         next = request.POST.get('next')
 
         if user and user.is_active:

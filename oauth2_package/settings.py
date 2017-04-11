@@ -42,6 +42,5 @@ if 'DEFAULT_RENDERER_CLASSES' not in REST_FRAMEWORK:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = ()
 if 'oauth2_provider.ext.rest_framework.OAuth2Authentication' not in REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES']:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] = ('oauth2_provider.ext.rest_framework.OAuth2Authentication',) + REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES']
-
 if 'rest_framework.authentication.SessionAuthentication' not in REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES']:
     REST_FRAMEWORK['DEFAULT_AUTHENTICATION_CLASSES'] += ('rest_framework.authentication.SessionAuthentication',)

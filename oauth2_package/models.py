@@ -6,21 +6,24 @@ from django.db import models
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None, **kwargs):
+    def create_user(self, username, email, password=None, **kwargs):
+        if not username:
+            raise ValueError('Users must choose a username.')
         if not email:
             raise ValueError('Users must have a valid email address.')
 
         account = self.model(
+            username=username,
             email=self.normalize_email(email)
         )
-
+        account.clean()
         account.set_password(password)
         account.save()
 
         return account
 
-    def create_superuser(self, email, password, **kwargs):
-        account = self.create_user(email, password, **kwargs)
+    def create_superuser(self, username, email, password, **kwargs):
+        account = self.create_user(username, email, password, **kwargs)
 
         account.is_staff = True
         account.is_superuser = True
@@ -30,6 +33,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractBaseUser, PermissionsMixin):
+    username = models.CharField(max_length=255, unique=True)
     email = models.EmailField(max_length=255, unique=True)
     is_staff = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
@@ -39,10 +43,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     objects = UserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
 
     def __unicode__(self):
-        return self.email
+        return self.username
 
     def get_full_name(self):
         return self.__unicode__()
