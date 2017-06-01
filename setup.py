@@ -18,7 +18,7 @@ f.close()
 
 setup(
     name='django-oauth2-package',
-    version='0.3.0',
+    version='0.4.0',
     author='Sparkgeo',
     author_email='dustin@sparkgeo.com',
     url='https://github.com/sparkgeo/django-oauth2-package',
