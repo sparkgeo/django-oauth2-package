@@ -17,7 +17,7 @@ class LoginView(View):
             'error': request.GET.get('error') or '',
             'logo': settings.LOGIN_FORM_LOGO
         }
-        template = loader.get_template('oauth2_package/login.html')
+        template = loader.get_template('login.html')
         return HttpResponse(template.render(data, request))
 
     def post(self, request):
